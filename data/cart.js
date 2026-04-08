@@ -1,4 +1,11 @@
-export const cart=[];
+export const cart=[ {
+    productId: "id1",
+    quantity: 2,
+  },
+  {
+    productId: "id2",
+    quantity: 1,
+  },];
 
 export function addToCart(productId){
   const quantitySelector = document.querySelector(`.js-quantity-selector-${productId}`);
