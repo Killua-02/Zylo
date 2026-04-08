@@ -9,7 +9,7 @@ cart.forEach((cartItem)=>{
   const matchingProduct = products.find((product)=>product.id===cartItem.productId);
 
   productSummaryHTML+=` 
-    <div class="cart-item-container">
+    <div class="cart-item-container js-cart-item-${matchingProduct.id}">
       <div class="delivery-date">
         Delivery date: Wednesday, June 15
       </div>
@@ -91,7 +91,10 @@ document.querySelectorAll('.js-delete-quantity').forEach((deleteButton)=>{
   deleteButton.addEventListener('click',()=>{
     const {productId} = deleteButton.dataset;
     removeFromCart(productId);
-    console.log(cart);
+
+    const container=document.querySelector(`.js-cart-item-${productId}`);
+    container.remove();
+
   });
 });
 
