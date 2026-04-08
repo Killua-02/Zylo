@@ -1,4 +1,4 @@
-export const cart=[ {
+export let cart=[ {
     productId: "id1",
     quantity: 2,
   },
@@ -19,4 +19,12 @@ export function addToCart(productId){
         quantity
       });
     }
+}
+
+export function removeFromCart(productId){
+  const newCart = cart.filter((cartItem)=>{
+    return cartItem.productId !== productId;
+  });
+  cart.length = 0;
+  cart.push(...newCart);
 }
