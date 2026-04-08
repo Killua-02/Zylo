@@ -1,4 +1,5 @@
-export let cart=[ {
+export let cart= JSON.parse(localStorage.getItem('cart')) ||
+  [ {
     productId: "id1",
     quantity: 2,
   },
@@ -6,6 +7,10 @@ export let cart=[ {
     productId: "id2",
     quantity: 1,
   },];
+
+function saveToLocalStorage(){
+  localStorage.setItem('cart',JSON.stringify(cart));
+}
 
 export function addToCart(productId){
   const quantitySelector = document.querySelector(`.js-quantity-selector-${productId}`);
@@ -19,6 +24,7 @@ export function addToCart(productId){
         quantity
       });
     }
+    saveToLocalStorage();
 }
 
 export function removeFromCart(productId){
@@ -27,4 +33,5 @@ export function removeFromCart(productId){
   });
   cart.length = 0;
   cart.push(...newCart);
+  saveToLocalStorage();
 }
