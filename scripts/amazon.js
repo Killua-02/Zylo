@@ -1,7 +1,10 @@
-import {cart, addToCart} from '../data/cart.js';
-import {products} from '../data/products.js';
-import {formatMoney} from './utils/money.js';
+import { cart, addToCart, calculateCartQuantity } from "../data/cart.js";
+import { products } from "../data/products.js";
+import { formatMoney } from "./utils/money.js";
 
+updateQuantity();
+
+// Generate HTML for the products grid on the Amazon page
 let productHTML = "";
 products.forEach((product) => {
   productHTML += `
@@ -55,35 +58,38 @@ products.forEach((product) => {
       </button>
     </div>`;
 });
+// Insert the generated HTML into the products grid element on the page
 document.querySelector(".js-products-grid").innerHTML = productHTML;
 
-function updateQuantity(){
-  let cartQuantity = 0;
-    cart.forEach((item) => {
-      cartQuantity += item.quantity;
-    });
-    document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
+// Update the cart quantity in the cart icon in the header
+function updateQuantity() {
+  const cartQuantity = calculateCartQuantity();
+  document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
 }
 
 let timeoutId;
-function addedToCartMessage(productId){
-  const addedToCartElement = document.querySelector(`.js-added-to-cart-${productId}`);
+// Show "Added to Cart" message when a product is added to the cart
+function addedToCartMessage(productId) {
+  const addedToCartElement = document.querySelector(
+    `.js-added-to-cart-${productId}`,
+  );
+  // Make the "Added to Cart" message visible
   addedToCartElement.style.opacity = "1";
 
   clearTimeout(timeoutId);
-
-  timeoutId=setTimeout(() => {
+  // After 2 seconds, hide the "Added to Cart" message
+  timeoutId = setTimeout(() => {
     addedToCartElement.style.opacity = "0";
   }, 2000);
 }
 
+// Add event listeners to all "Add to Cart" buttons
 document.querySelectorAll(".js-add-to-cart-button").forEach((button) => {
-  const {productId} = button.dataset;
-
+  const { productId } = button.dataset;
+  // When an "Add to Cart" button is clicked, add the corresponding product to the cart, update the cart quantity in the header, and show the "Added to Cart" message
   button.addEventListener("click", () => {
     addToCart(productId);
     updateQuantity();
     addedToCartMessage(productId);
   });
 });
- 
