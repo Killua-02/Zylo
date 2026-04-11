@@ -104,12 +104,13 @@ document.querySelectorAll(".js-delete-quantity").forEach((deleteButton) => {
 
 function updateQuantity() {
   const cartQuantity = calculateCartQuantity();
-  document.querySelector(".js-checkout-header-quantity").innerHTML = cartQuantity;
+  document.querySelector(".js-checkout-header-quantity").innerHTML =
+    cartQuantity;
 }
 
-document.querySelectorAll('.js-update-quantity').forEach(updateButton=>{
-  updateButton.addEventListener('click',()=>{
-    const {productId} = updateButton.dataset;
+document.querySelectorAll(".js-update-quantity").forEach((updateButton) => {
+  updateButton.addEventListener("click", () => {
+    const { productId } = updateButton.dataset;
     console.log(productId);
   });
 });
