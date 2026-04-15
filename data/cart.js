@@ -49,3 +49,12 @@ export function calculateCartQuantity() {
   });
   return cartQuantity;
 }
+
+export function updateCartQuantity(productId, newQuantity) {
+  // Implementation for updating cart quantity  
+  const cartItem = cart.find((item) => item.productId === productId);
+  if (cartItem) {
+    cartItem.quantity = newQuantity;
+    saveToLocalStorage();
+  }
+}
