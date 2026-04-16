@@ -1,9 +1,14 @@
 import { cart, removeFromCart, calculateCartQuantity, updateCartQuantity } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatMoney } from "./utils/money.js";
+import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
+
+const today=dayjs();
+const deliveryDate=today.add(7,'day').format('dddd, MMMM D');
+console.log(deliveryDate);
+
 
 let productSummaryHTML = "";
-updateQuantity();
 
 // Loop through the items in the cart and create HTML for each item
 cart.forEach((cartItem) => {
@@ -91,6 +96,8 @@ cart.forEach((cartItem) => {
 });
 // Insert the product summary HTML into the page
 document.querySelector(".js-order-summary").innerHTML = productSummaryHTML;
+updateQuantity();
+
 
 // Add event listeners to delete buttons
 document.querySelectorAll(".js-delete-quantity").forEach((deleteButton) => {
