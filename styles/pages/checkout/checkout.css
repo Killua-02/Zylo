@@ -210,11 +210,12 @@
   margin-bottom: 15px;
 }
 
-input{
+.quantity-input{
   width:30px;
 }
 
-input, .save-quantity-link{
+.quantity-input,
+.save-quantity-link{
   display: none;
 }
 
