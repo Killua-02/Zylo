@@ -2,12 +2,12 @@ export let cart = JSON.parse(localStorage.getItem("cart")) || [
   {
     productId: "id1",
     quantity: 2,
-    deliveryOptionId:'1'
+    deliveryOptionId: "1",
   },
   {
     productId: "id2",
     quantity: 1,
-    deliveryOptionId:'2'
+    deliveryOptionId: "2",
   },
 ];
 
@@ -29,7 +29,7 @@ export function addToCart(productId) {
     cart.push({
       productId,
       quantity,
-      deliveryOptionId:'1'
+      deliveryOptionId: "1",
     });
   }
   saveToLocalStorage();
@@ -54,7 +54,7 @@ export function calculateCartQuantity() {
 }
 
 export function updateCartQuantity(productId, newQuantity) {
-  // Implementation for updating cart quantity  
+  // Implementation for updating cart quantity
   const cartItem = cart.find((item) => item.productId === productId);
   if (cartItem) {
     cartItem.quantity = newQuantity;

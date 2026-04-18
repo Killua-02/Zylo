@@ -1,13 +1,17 @@
-import { cart, removeFromCart, calculateCartQuantity, updateCartQuantity } from "../data/cart.js";
+import {
+  cart,
+  removeFromCart,
+  calculateCartQuantity,
+  updateCartQuantity,
+} from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatMoney } from "./utils/money.js";
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 import { deliveryOptions } from "../data/deliveryOptions.js";
 
-const today=dayjs();
-const deliveryDate=today.add(7,'day').format('dddd, MMMM D');
+const today = dayjs();
+const deliveryDate = today.add(7, "day").format("dddd, MMMM D");
 console.log(deliveryDate);
-
 
 let productSummaryHTML = "";
 
@@ -64,16 +68,18 @@ document.querySelector(".js-order-summary").innerHTML = productSummaryHTML;
 updateQuantity();
 
 function deliveryOptionsHTML(matchingProduct) {
-  let html='';
-  deliveryOptions.forEach((deliveryoption)=>{
-    const today=dayjs();
-    const deliveryDate=today.add(deliveryoption.deliveryDays,'days');
-    const dateString=deliveryDate.format('dddd, MMMM D');
+  let html = "";
+  deliveryOptions.forEach((deliveryoption) => {
+    const today = dayjs();
+    const deliveryDate = today.add(deliveryoption.deliveryDays, "days");
+    const dateString = deliveryDate.format("dddd, MMMM D");
 
-    const priceString=deliveryoption.priceCents===0 ? 'Free' : 
-    `$${formatMoney(deliveryoption.priceCents)} - `
+    const priceString =
+      deliveryoption.priceCents === 0
+        ? "Free"
+        : `$${formatMoney(deliveryoption.priceCents)} - `;
 
-    html+=`
+    html += `
       <div class="delivery-option">
         <input type="radio" class="delivery-option-input"
           name="delivery-option-${matchingProduct.id}">
@@ -86,11 +92,10 @@ function deliveryOptionsHTML(matchingProduct) {
           </div>
         </div>
       </div>
-    `
+    `;
   });
   return html;
 }
-
 
 // Add event listeners to delete buttons
 document.querySelectorAll(".js-delete-quantity").forEach((deleteButton) => {
@@ -112,44 +117,46 @@ function updateQuantity() {
 
 document.querySelectorAll(".js-update-quantity").forEach((updateButton) => {
   updateButton.addEventListener("click", () => {
-    const {productId}=updateButton.dataset;
-    const container=document.querySelector(`.js-cart-item-${productId}`);
-    container.classList.add('is-editing-quantity');
+    const { productId } = updateButton.dataset;
+    const container = document.querySelector(`.js-cart-item-${productId}`);
+    container.classList.add("is-editing-quantity");
 
-    container.querySelector('.js-update-quantity').classList.add('hidden');
+    container.querySelector(".js-update-quantity").classList.add("hidden");
 
-    container.querySelector('.quantity-label').classList.add('hidden');
+    container.querySelector(".quantity-label").classList.add("hidden");
   });
 });
 
-document.querySelectorAll('.save-quantity-link').forEach((saveButton) => {
-  saveButton.addEventListener('click', () => {
+document.querySelectorAll(".save-quantity-link").forEach((saveButton) => {
+  saveButton.addEventListener("click", () => {
     const { productId } = saveButton.dataset;
-    const container=document.querySelector(`.js-cart-item-${productId}`);
-    const newQuantity = Number(container.querySelector('.quantity-input').value);
+    const container = document.querySelector(`.js-cart-item-${productId}`);
+    const newQuantity = Number(
+      container.querySelector(".quantity-input").value,
+    );
 
-    if(isNaN(newQuantity) || newQuantity <= 0 || newQuantity > 1000) {
-      alert('Please enter a valid quantity between 1 and 1000.');
+    if (isNaN(newQuantity) || newQuantity <= 0 || newQuantity > 1000) {
+      alert("Please enter a valid quantity between 1 and 1000.");
       return;
     }
 
-    container.classList.remove('is-editing-quantity');
-    container.querySelector('.js-update-quantity').classList.remove('hidden');
-    container.querySelector('.quantity-label').classList.remove('hidden');
-
+    container.classList.remove("is-editing-quantity");
+    container.querySelector(".js-update-quantity").classList.remove("hidden");
+    container.querySelector(".quantity-label").classList.remove("hidden");
 
     updateCartQuantity(productId, newQuantity);
-    container.querySelector('.quantity-label').innerHTML = newQuantity;
+    container.querySelector(".quantity-label").innerHTML = newQuantity;
     updateQuantity();
   });
 });
 
-document.querySelectorAll('.quantity-input').forEach((input) => {
-  input.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter') {
-      const saveButton = input.closest('.cart-item-container').querySelector('.save-quantity-link');
+document.querySelectorAll(".quantity-input").forEach((input) => {
+  input.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+      const saveButton = input
+        .closest(".cart-item-container")
+        .querySelector(".save-quantity-link");
       saveButton.click();
     }
   });
 });
-
