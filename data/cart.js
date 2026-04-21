@@ -61,3 +61,4 @@ export function updateCartQuantity(productId, newQuantity) {
     saveToLocalStorage();
   }
 }
+
