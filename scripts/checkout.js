@@ -3,6 +3,7 @@ import {
   removeFromCart,
   calculateCartQuantity,
   updateCartQuantity,
+  updateDeliveryOption,
 } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatMoney } from "./utils/money.js";
@@ -89,7 +90,9 @@ function deliveryOptionsHTML(matchingProduct,cartItem) {
     const isChecked= deliveryoption.id===cartItem.deliveryOptionId;
 
     html += `
-      <div class="delivery-option">
+      <div class="delivery-option js-delivery-option"
+        data-product-id='${matchingProduct.id}'
+        data-delivery-option-id='${deliveryoption.id}'>
         <input type="radio" 
           ${isChecked ? 'checked' : ''}
           class="delivery-option-input"
@@ -107,6 +110,14 @@ function deliveryOptionsHTML(matchingProduct,cartItem) {
   });
   return html;
 }
+
+document.querySelectorAll('.js-delivery-option')
+ .forEach((element)=>{
+    element.addEventListener('click',()=>{
+      const {productId,deliveryOptionId}=element.dataset;
+      updateDeliveryOption(productId,deliveryOptionId);
+    })  
+  })
 
 // Add event listeners to delete buttons
 document.querySelectorAll(".js-delete-quantity").forEach((deleteButton) => {

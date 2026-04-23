@@ -35,6 +35,18 @@ export function addToCart(productId) {
   saveToLocalStorage();
 }
 
+export function updateDeliveryOption(productId,deliveryOptionId){
+  let matchingItem;
+  cart.forEach((element)=>{
+    if(element.productId===productId){
+      matchingItem=element;
+    }
+  })
+  matchingItem.deliveryOptionId=deliveryOptionId;
+  saveToLocalStorage();
+
+}
+
 // function to update the quantity of an item after deleting it from the cart
 export function removeFromCart(productId) {
   const newCart = cart.filter((cartItem) => {
