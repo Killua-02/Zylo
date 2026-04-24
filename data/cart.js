@@ -36,15 +36,11 @@ export function addToCart(productId) {
 }
 
 export function updateDeliveryOption(productId,deliveryOptionId){
-  let matchingItem;
-  cart.forEach((element)=>{
-    if(element.productId===productId){
-      matchingItem=element;
-    }
-  })
-  matchingItem.deliveryOptionId=deliveryOptionId;
-  saveToLocalStorage();
-
+  const matchingItem = cart.find((item) => item.productId === productId);
+  if(matchingItem){
+    matchingItem.deliveryOptionId = deliveryOptionId;
+    saveToLocalStorage();
+  }
 }
 
 // function to update the quantity of an item after deleting it from the cart

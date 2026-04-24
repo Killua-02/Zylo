@@ -1,3 +1,15 @@
+import {cart} from "./cart.js"
+ 
+export function getProduct(productId){
+  let matchingItem;
+    products.forEach((element)=>{
+      if(element.id===productId){
+        matchingItem=element;
+      }
+    })
+    return matchingItem;
+}
+
 export const products = [
   {
     id: "id1",
