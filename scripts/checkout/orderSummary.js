@@ -1,7 +1,6 @@
 import {
   cart,
   removeFromCart,
-  calculateCartQuantity,
   updateCartQuantity,
   updateDeliveryOption,
 } from "../../data/cart.js";
@@ -13,6 +12,7 @@ import {
   getDeliveryOption,
 } from "../../data/deliveryOptions.js";
 import { renderPaymentSummary } from "./paymentSummary.js";
+import {renderCheckoutHeader} from "./checkoutHeader.js";
 
 export function renderOrderSummary() {
   let orderSummaryHTML = "";
@@ -72,7 +72,6 @@ export function renderOrderSummary() {
   });
   // Insert the product summary HTML into the page
   document.querySelector(".js-order-summary").innerHTML = orderSummaryHTML;
-  updateQuantity();
 
   function deliveryOptionsHTML(matchingProduct, cartItem) {
     let html = "";
@@ -118,14 +117,9 @@ export function renderOrderSummary() {
 
       renderOrderSummary();
       renderPaymentSummary();
+      renderCheckoutHeader();
     });
   });
-
-  function updateQuantity() {
-    const cartQuantity = calculateCartQuantity();
-    document.querySelector(".js-checkout-header-quantity").innerHTML =
-      cartQuantity;
-  }
 
   document.querySelectorAll(".js-update-quantity").forEach((updateButton) => {
     updateButton.addEventListener("click", () => {
@@ -158,8 +152,8 @@ export function renderOrderSummary() {
 
       updateCartQuantity(productId, newQuantity);
       container.querySelector(".quantity-label").innerHTML = newQuantity;
-      updateQuantity();
       renderPaymentSummary();
+      renderCheckoutHeader();
     });
   });
 
